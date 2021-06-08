@@ -24,21 +24,8 @@ struct ChatActivity: GroupActivity {
 }
 
 class ViewController: NSViewController {
-    var session: GroupSession<ChatActivity>? {
-        didSet {
-            if let session = session {
-                session.join()
-                self.everyoneView.string = session.activity.text ?? "null"
-                session.$activity.sink { activity in
-                    DispatchQueue.main.async {
-                        self.everyoneView.string = activity.text ?? "null"
-                    }
-                }
-                .store(in: &self.cancellables)
-            }
-        }
-    }
-    var cancellables = Set<AnyCancellable>()
+    var session: GroupSession<ChatActivity>?
+    var subscriptions = Set<AnyCancellable>()
     @IBOutlet weak var myField: NSTextField!
     @IBOutlet var everyoneView: NSTextView!
     
@@ -49,6 +36,18 @@ class ViewController: NSViewController {
         async {
             for await session in ChatActivity.sessions() {
                 self.session = session
+                subscriptions.removeAll()
+                session.$state.sink { [weak self] state in
+                    print(state)
+                    if case .invalidated = state {
+                        self?.session = nil
+                        self?.subscriptions.removeAll()
+                    }
+                }.store(in: &subscriptions)
+                session.join()
+                session.$activity.sink { [weak self] activity in
+                    self?.everyoneView.string = activity.text ?? "null"
+                }.store(in: &subscriptions)
             }
         }
     }
@@ -56,18 +55,14 @@ class ViewController: NSViewController {
     @IBAction func pushToEveryone(_ sender: Any) {
         let aaa = myField.stringValue
         let activity = ChatActivity(text: aaa)
-        if let session = session {
-            session.activity = activity
-        } else {
-            async {
-                switch await activity.prepareForActivation() {
-                case .activationPreferred:
-                    activity.activate()
-                default:
-                    let alert = NSAlert()
-                    alert.messageText = "denied"
-                    alert.runModal()
-                }
+        async {
+            switch await activity.prepareForActivation() {
+            case .activationPreferred:
+                activity.activate()
+            default:
+                let alert = NSAlert()
+                alert.messageText = "denied"
+                alert.runModal()
             }
         }
     }
