@@ -42,6 +42,7 @@
 		CE3E03EE266F0485004508C7 /* FaceChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceChatTests.swift; sourceTree = "<group>"; };
 		CE3E03F4266F0485004508C7 /* FaceChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FaceChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE3E03F8266F0485004508C7 /* FaceChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceChatUITests.swift; sourceTree = "<group>"; };
+		CE3E0405266F0830004508C7 /* FaceChat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FaceChat.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +93,7 @@
 		CE3E03DC266F0484004508C7 /* FaceChat */ = {
 			isa = PBXGroup;
 			children = (
+				CE3E0405266F0830004508C7 /* FaceChat.entitlements */,
 				CE3E03DD266F0484004508C7 /* AppDelegate.swift */,
 				CE3E03DF266F0484004508C7 /* ViewController.swift */,
 				CE3E03E1266F0485004508C7 /* Assets.xcassets */,
@@ -414,6 +416,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FaceChat/FaceChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -442,6 +445,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FaceChat/FaceChat.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
